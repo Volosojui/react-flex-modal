@@ -1,0 +1,42 @@
+{
+  "name": "react-js-modal",
+  "version": "0.1.0",
+  "description": "ReactJS Modal",
+  "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server",
+    "build": "NODE_ENV=production webpack --config webpack.config.dist.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Volosojui/react-js-modal.git"
+  },
+  "keywords": [
+    "reactjs",
+    "react",
+    "modal",
+    "dialog"
+  ],
+  "author": "Alex Volosojui (https://github.com/Volosojui)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Volosojui/react-js-modal/issues"
+  },
+  "homepage": "https://github.com/Volosojui/react-js-modal",
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-core": "6.24.1",
+    "babel-loader": "7.0.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-es2016": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "react": "15.3.0",
+    "react-dom": "15.3.0",
+    "webpack": "2.4.1",
+    "webpack-dev-server": "2.4.5"
+  },
+  "dependencies": {
+    "classnames": "2.2.5"
+  }
+}

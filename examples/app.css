@@ -1,0 +1,79 @@
+body {
+  margin: 0;
+}
+
+[data-app] {
+  height: 4000px;
+}
+
+[data-app] .button {
+  margin-top: 500px;
+}
+
+.Modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .8);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.Modal__layout {
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.Modal__dialog {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 5px;
+  background-color: #fff;
+  flex-shrink: 0;
+  outline: 0;
+}
+
+.Modal__content {
+  padding: 15px;
+}
+
+
+/*===================*/
+/* Animation example */
+/*===================*/
+
+.Modal--enter {
+  opacity: 0;
+}
+
+.Modal--enter .Modal__dialog {
+  transform: translateY(50px);
+}
+
+.Modal--enter.Modal--enter-active {
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.Modal--enter.Modal--enter-active .Modal__dialog {
+  transform: translateY(0px);
+  transition: transform .3s ease;
+}
+
+.Modal--leave {
+  opacity: 1;
+}
+
+.Modal--leave.Modal--leave-active {
+  opacity: 0;
+  transition: opacity .3s ease;
+}
