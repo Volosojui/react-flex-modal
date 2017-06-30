@@ -3,7 +3,7 @@ Modal component for ReactJS
 
 ## Run example
 
-```
+```shell
 git clone https://github.com/Volosojui/react-js-modal
 cd react-js-modal
 npm install
