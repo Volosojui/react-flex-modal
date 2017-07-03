@@ -59,30 +59,94 @@ Type: `string`
 
 Default: `fixed`
 
-It should be equal to `position` CSS-property specified in styles
+It should be equal to `position` property specified in the styles.
 
 #### transition
 Type: `bool`
 
 Default: `false`
 
-Enable/Disable timer for CSS transition. If enabled, you should set `transitionEnterTimeout` and `transitionLeaveTimeout`.
-Use it only if you want to add CSS animation.
+*Use it only if you want to add the opening and closing CSS animations. You should specify the required styles within certain classes.* See in the [CSS classes](#css-classes).
+
+Enable/Disable timer for the opening and closing CSS transitions. If enabled, you should set `transitionEnterTimeout` and `transitionLeaveTimeout`.
 
 #### transitionEnterTimeout
 Type: `number`
 
 Default: `300` ms
 
-The duration of enter-transition. It should be equal to the duration of transition specified in CSS enter-classes.
+The duration of CSS transition when the modal window is opening.
+It should be equal to the sum of the greatest duration and the greatest delay specified in `transition` property of CSS rule `.Modal--enter.Modal--enter-active`. See in the [CSS classes](#css-classes).
+
+For example:
+```css
+/*
+  transition-duration = .3s = 300ms
+  transition-delay = 0s = 0ms
+  transitionLeaveTimeout = 300ms + 0s = 300ms
+ */
+
+.Modal--enter.Modal--enter-active {
+  ...
+  transition: transform .3s ease, opacity .3s ease;
+}
+```
 
 #### transitionLeaveTimeout
 Type: `number`
 
 Default: `300` ms
 
-The duration of leave-transition. It should be equal to the duration of transition specified in CSS leave-classes.
+The duration of CSS transition when the modal window is closing.
+It should be equal to the sum of the greatest duration and the greatest delay specified in `transition` property of CSS rule `.Modal--leave.Modal--leave-active`. See in the [CSS classes](#css-classes).
+
+For example:
+```css
+/*
+  transition-duration = .3s = 300ms
+  transition-delay = .1s = 100ms
+  transitionLeaveTimeout = 300ms + 100ms = 400ms
+ */
+
+.Modal--leave.Modal--leave-active {
+  ...
+  transition: transform .2s ease, opacity .3s ease .1s;
+}
+```
 
 ## CSS classes
+
+#### .Modal--enter
+Defines the beginning of the modal window opening.
+
+#### .Modal--enter.Modal--enter-active
+Defines the actual opening.
+
+#### .Modal--leave
+Defines the beginning of the modal window closing.
+
+#### .Modal--leave.Modal--leave-active
+Defines the actual closing.
+
+```css
+
+.Modal--enter {
+  opacity: 0;
+}
+
+.Modal--enter.Modal--enter-active {
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.Modal--leave {
+  opacity: 1;
+}
+
+.Modal--leave.Modal--leave-active {
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+```
 
 ## License
