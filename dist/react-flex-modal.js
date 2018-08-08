@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("react"), require("react-dom"));
+		module.exports = factory(require("prop-types"), require("react"), require("react-dom"));
 	else if(typeof define === 'function' && define.amd)
-		define(["react", "react-dom"], factory);
+		define(["prop-types", "react", "react-dom"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactJSModal"] = factory(require("react"), require("react-dom"));
+		exports["ReactFlexModal"] = factory(require("prop-types"), require("react"), require("react-dom"));
 	else
-		root["ReactJSModal"] = factory(root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__) {
+		root["ReactFlexModal"] = factory(root["PropTypes"], root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_0__, __WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -101,15 +101,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(1);
+var _propTypes = __webpack_require__(0);
 
-var _reactDom2 = _interopRequireDefault(_reactDom);
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _classnames = __webpack_require__(4);
+var _classnames = __webpack_require__(5);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -150,14 +150,28 @@ var ModalPortal = function (_Component) {
       leaveActive: false
     };
 
+    _this.onCloseClick = function () {
+      _this.close();
+    };
+
+    _this.onInsideDialogClick = function (e) {
+      _this.willClose = false;
+    };
+
+    _this.onKeyDown = function (e) {
+      if (e.keyCode === KEYCODES.ESCAPE && _this.props.isOpen) {
+        _this.close();
+      }
+    };
+
+    _this.onOutsideDialogClick = function (e) {
+      if (_this.willClose) _this.close();
+      _this.willClose = true;
+    };
+
     _this.willClose = true;
     _this.scrollTop = 0;
     _this.doc = document.documentElement;
-
-    _this.handleOutsideDialogClick = _this.handleOutsideDialogClick.bind(_this);
-    _this.handleInsideDialogClick = _this.handleInsideDialogClick.bind(_this);
-    _this.handleCloseClick = _this.handleCloseClick.bind(_this);
-    _this.handleKeydown = _this.handleKeydown.bind(_this);
     return _this;
   }
 
@@ -170,7 +184,7 @@ var ModalPortal = function (_Component) {
       this.scrollTop = window.pageYOffset || this.doc.scrollTop;
 
       setTimeout(function () {
-        _this2.enforceFoces();
+        _this2.enforceFocus();
       }, 0);
 
       if (this.props.transition) {
@@ -199,7 +213,7 @@ var ModalPortal = function (_Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       if (!(document.activeElement === this.modal || this.modal.contains(document.activeElement))) {
-        this.enforceFoces();
+        this.enforceFocus();
       }
     }
   }, {
@@ -223,49 +237,6 @@ var ModalPortal = function (_Component) {
       }
     }
   }, {
-    key: 'handleOutsideDialogClick',
-    value: function handleOutsideDialogClick(e) {
-      if (this.willClose) this.close();
-      this.willClose = true;
-    }
-  }, {
-    key: 'handleInsideDialogClick',
-    value: function handleInsideDialogClick(e) {
-      this.willClose = false;
-    }
-  }, {
-    key: 'handleCloseClick',
-    value: function handleCloseClick() {
-      this.close();
-    }
-  }, {
-    key: 'handleKeydown',
-    value: function handleKeydown(e) {
-      if (e.keyCode === KEYCODES.ESCAPE && this.props.isOpen) {
-        this.close();
-      }
-    }
-  }, {
-    key: 'addRootClass',
-    value: function addRootClass() {
-      document.documentElement.classList.add(ROOT_CLASS_OPEN);
-    }
-  }, {
-    key: 'removeRootClass',
-    value: function removeRootClass() {
-      document.documentElement.classList.remove(ROOT_CLASS_OPEN);
-    }
-  }, {
-    key: 'enforceFoces',
-    value: function enforceFoces() {
-      this.modal.focus();
-    }
-  }, {
-    key: 'getTransitionLeaveTimeout',
-    value: function getTransitionLeaveTimeout() {
-      return Math.min(this.transitionTimeEnd - this.transitionTimeStart, this.props.transitionLeaveTimeout);
-    }
-  }, {
     key: 'getScrollbarSize',
     value: function getScrollbarSize() {
       var scroller = document.createElement('div');
@@ -275,6 +246,16 @@ var ModalPortal = function (_Component) {
       document.body.appendChild(scroller);
 
       return scroller.offsetWidth - scroller.clientWidth;
+    }
+  }, {
+    key: 'getTransitionLeaveTimeout',
+    value: function getTransitionLeaveTimeout() {
+      return Math.min(this.transitionTimeEnd - this.transitionTimeStart, this.props.transitionLeaveTimeout);
+    }
+  }, {
+    key: 'addRootClass',
+    value: function addRootClass() {
+      document.documentElement.classList.add(ROOT_CLASS_OPEN);
     }
   }, {
     key: 'close',
@@ -303,6 +284,16 @@ var ModalPortal = function (_Component) {
       }
     }
   }, {
+    key: 'enforceFocus',
+    value: function enforceFocus() {
+      this.modal.focus();
+    }
+  }, {
+    key: 'removeRootClass',
+    value: function removeRootClass() {
+      document.documentElement.classList.remove(ROOT_CLASS_OPEN);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _classNames,
@@ -319,8 +310,8 @@ var ModalPortal = function (_Component) {
           },
           className: mainClassNames,
           tabIndex: -1,
-          onKeyDown: this.handleKeydown,
-          onClick: this.handleOutsideDialogClick
+          onKeyDown: this.onKeyDown,
+          onClick: this.onOutsideDialogClick
         },
         _react2.default.createElement(
           'div',
@@ -329,19 +320,19 @@ var ModalPortal = function (_Component) {
             'div',
             {
               className: MAIN_CLASS + '__dialog',
-              onClick: this.handleInsideDialogClick
+              onClick: this.onInsideDialogClick
             },
             _react2.default.createElement(
               'button',
               {
                 className: MAIN_CLASS + '__close',
-                onClick: this.handleCloseClick
+                onClick: this.onCloseClick
               },
               _react2.default.createElement('span', { className: MAIN_CLASS + '__close-icon' }),
               _react2.default.createElement(
                 'span',
                 { className: MAIN_CLASS + '__close-text' },
-                '\u0417\u0430\u043A\u0440\u044B\u0442\u044C'
+                'Close'
               )
             ),
             _react2.default.createElement(
@@ -359,13 +350,13 @@ var ModalPortal = function (_Component) {
 }(_react.Component);
 
 ModalPortal.propTypes = {
-  isOpen: _react2.default.PropTypes.bool.isRequired,
-  onClose: _react2.default.PropTypes.func,
-  position: _react2.default.PropTypes.string,
-  transition: _react2.default.PropTypes.bool,
-  transitionEnterTimeout: _react2.default.PropTypes.number,
-  transitionLeaveTimeout: _react2.default.PropTypes.number,
-  children: _react2.default.PropTypes.node
+  isOpen: _propTypes2.default.bool.isRequired,
+  onClose: _propTypes2.default.func,
+  position: _propTypes2.default.string,
+  transition: _propTypes2.default.bool,
+  transitionEnterTimeout: _propTypes2.default.number,
+  transitionLeaveTimeout: _propTypes2.default.number,
+  children: _propTypes2.default.node
 };
 ModalPortal.defaultProps = {
   isOpen: false,
@@ -378,6 +369,12 @@ exports.default = ModalPortal;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_3__;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -389,13 +386,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(0);
+var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(1);
+var _reactDom = __webpack_require__(3);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _propTypes = __webpack_require__(0);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _ModalPortal = __webpack_require__(2);
 
@@ -409,7 +410,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function getParentContainer() {
+var getParentContainer = function getParentContainer() {
   var container = document.querySelector('[data-modal-container]');
 
   if (!container) {
@@ -419,7 +420,7 @@ function getParentContainer() {
   }
 
   return container;
-}
+};
 
 var Modal = function (_Component) {
   _inherits(Modal, _Component);
@@ -435,29 +436,30 @@ var Modal = function (_Component) {
     value: function componentDidMount() {
       var props = this.props;
 
+
       this.parentContainer = getParentContainer();
 
       if (props.isOpen) {
-        this.mountCombo(props);
+        this.mountPortal(props);
       }
     }
   }, {
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.isOpen) {
-        this.mountCombo(nextProps);
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.props.isOpen) {
+        this.mountPortal(this.props);
       } else {
-        this.unmountCombo();
+        this.unmountPortal();
       }
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.unmountCombo();
+      this.unmountPortal();
     }
   }, {
-    key: 'mountCombo',
-    value: function mountCombo(props) {
+    key: 'mountPortal',
+    value: function mountPortal(props) {
       if (!this.container) {
         this.container = document.createElement('div');
         this.parentContainer.appendChild(this.container);
@@ -466,8 +468,8 @@ var Modal = function (_Component) {
       _reactDom2.default.render(_react2.default.createElement(_ModalPortal2.default, props), this.container);
     }
   }, {
-    key: 'unmountCombo',
-    value: function unmountCombo() {
+    key: 'unmountPortal',
+    value: function unmountPortal() {
       if (this.container) {
         _reactDom2.default.unmountComponentAtNode(this.container);
       }
@@ -483,18 +485,21 @@ var Modal = function (_Component) {
 }(_react.Component);
 
 Modal.propTypes = {
-  isOpen: _react2.default.PropTypes.bool.isRequired,
-  onClose: _react2.default.PropTypes.func,
-  position: _react2.default.PropTypes.string,
-  transition: _react2.default.PropTypes.bool,
-  transitionEnterTimeout: _react2.default.PropTypes.number,
-  transitionLeaveTimeout: _react2.default.PropTypes.number,
-  children: _react2.default.PropTypes.node
+  children: _propTypes2.default.node,
+  isOpen: _propTypes2.default.bool,
+  onClose: _propTypes2.default.func,
+  position: _propTypes2.default.string,
+  transition: _propTypes2.default.bool,
+  transitionEnterTimeout: _propTypes2.default.number,
+  transitionLeaveTimeout: _propTypes2.default.number
+};
+Modal.defaultProps = {
+  isOpen: false
 };
 exports.default = Modal;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!

@@ -4,18 +4,24 @@ Modal component for ReactJS
 ## Run example
 
 ```shell
-git clone https://github.com/Volosojui/react-js-modal
-cd react-js-modal
+git clone https://github.com/Volosojui/react-flex-modal
+cd react-flex-modal
 npm install
 npm start
 open http://localhost:9000
+```
+
+## Install
+
+```shell
+npm install react-flex-modal --save
 ```
 
 ## Usage
 
 ```jsx
 import React from 'react';
-import Modal from 'react-js-modal';
+import Modal from 'react-flex-modal';
 
 class MyModal extends Component {
   render() {
@@ -114,7 +120,11 @@ For example:
 }
 ```
 
-## CSS classes
+## CSS
+
+The package does not include CSS styles, so you can customize the appearance of modal as you wish.
+
+### Animation classes
 
 #### .Modal--enter
 Defines the beginning of the modal window opening.

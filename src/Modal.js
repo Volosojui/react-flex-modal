@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 
 import ModalPortal from './ModalPortal';
 
-function getParentContainer(){
+const getParentContainer = () => {
   let container = document.querySelector('[data-modal-container]');
 
   if (!container) {
@@ -15,40 +16,44 @@ function getParentContainer(){
   return container;
 }
 
-class Modal extends Component {
+export default class Modal extends Component {
   static propTypes = {
-    isOpen: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func,
-    position: React.PropTypes.string,
-    transition: React.PropTypes.bool,
-    transitionEnterTimeout: React.PropTypes.number,
-    transitionLeaveTimeout: React.PropTypes.number,
-    children: React.PropTypes.node
+    children: PropTypes.node,
+    isOpen: PropTypes.bool,
+    onClose: PropTypes.func,
+    position: PropTypes.string,
+    transition: PropTypes.bool,
+    transitionEnterTimeout: PropTypes.number,
+    transitionLeaveTimeout: PropTypes.number
   };
 
+  static defaultProps = {
+    isOpen: false
+  }
+
   componentDidMount() {
-    const props = this.props;
+    const { props } = this;
 
     this.parentContainer = getParentContainer();
 
     if (props.isOpen) {
-      this.mountCombo(props);
+      this.mountPortal(props);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isOpen) {
-      this.mountCombo(nextProps);
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.isOpen) {
+      this.mountPortal(this.props);
     } else {
-      this.unmountCombo();
+      this.unmountPortal();
     }
   }
 
   componentWillUnmount() {
-    this.unmountCombo();
+    this.unmountPortal();
   }
 
-  mountCombo(props) {
+  mountPortal(props) {
     if (!this.container) {
       this.container = document.createElement('div');
       this.parentContainer.appendChild(this.container);
@@ -57,7 +62,7 @@ class Modal extends Component {
     ReactDOM.render(<ModalPortal {...props} />, this.container);
   }
 
-  unmountCombo() {
+  unmountPortal() {
     if (this.container) {
       ReactDOM.unmountComponentAtNode(this.container);
     }
@@ -67,5 +72,3 @@ class Modal extends Component {
     return null;
   }
 }
-
-export default Modal;

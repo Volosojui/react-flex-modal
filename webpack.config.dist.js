@@ -20,6 +20,13 @@ var plugins = [],
       commonjs: 'react-dom',
       amd: 'react-dom',
       umd: 'react-dom'
+    },
+    'prop-types': {
+      root: 'PropTypes',
+      commonjs2: 'prop-types',
+      commonjs: 'prop-types',
+      amd: 'prop-types',
+      umd: 'prop-types'
     }
   };
 
@@ -45,8 +52,8 @@ module.exports = {
   context: __dirname,
 
   entry: {
-    'react-modal': SRC + '/Modal.js',
-    'react-modal.min': SRC + '/Modal.js'
+    'react-flex-modal': SRC + '/Modal.js',
+    'react-flex-modal.min': SRC + '/Modal.js'
   },
 
   externals: externals,
@@ -55,7 +62,7 @@ module.exports = {
     filename: '[name].js',
     path: __dirname + '/' + DIST,
     libraryTarget: 'umd',
-    library: 'ReactJSModal'
+    library: 'ReactFlexModal'
   },
 
   module: {

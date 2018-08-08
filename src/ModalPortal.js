@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const KEYCODES = {
@@ -16,13 +16,13 @@ const MAIN_CLASS_TRANSITION_LEAVE_ACTIVE = MAIN_CLASS + '--leave-active';
 
 class ModalPortal extends Component {
   static propTypes = {
-    isOpen: React.PropTypes.bool.isRequired,
-    onClose: React.PropTypes.func,
-    position: React.PropTypes.string,
-    transition: React.PropTypes.bool,
-    transitionEnterTimeout: React.PropTypes.number,
-    transitionLeaveTimeout: React.PropTypes.number,
-    children: React.PropTypes.node
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func,
+    position: PropTypes.string,
+    transition: PropTypes.bool,
+    transitionEnterTimeout: PropTypes.number,
+    transitionLeaveTimeout: PropTypes.number,
+    children: PropTypes.node
   };
 
   static defaultProps = {
@@ -33,24 +33,19 @@ class ModalPortal extends Component {
     transitionLeaveTimeout: 300
   };
 
+  state = {
+    enter: false,
+    enterActive: false,
+    leave: false,
+    leaveActive: false
+  }
+
   constructor(props) {
     super(props);
-
-    this.state = {
-      enter: false,
-      enterActive: false,
-      leave: false,
-      leaveActive: false
-    };
 
     this.willClose = true;
     this.scrollTop = 0;
     this.doc = document.documentElement;
-
-    this.handleOutsideDialogClick = this.handleOutsideDialogClick.bind(this);
-    this.handleInsideDialogClick = this.handleInsideDialogClick.bind(this);
-    this.handleCloseClick = this.handleCloseClick.bind(this);
-    this.handleKeydown = this.handleKeydown.bind(this);
   }
 
   componentDidMount() {
@@ -58,7 +53,7 @@ class ModalPortal extends Component {
     this.scrollTop = window.pageYOffset || this.doc.scrollTop;
 
     setTimeout(() => {
-      this.enforceFoces();
+      this.enforceFocus();
     }, 0);
 
     if (this.props.transition) {
@@ -86,7 +81,7 @@ class ModalPortal extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (!(document.activeElement === this.modal || this.modal.contains(document.activeElement))) {
-      this.enforceFoces();
+      this.enforceFocus();
     }
   }
 
@@ -109,39 +104,23 @@ class ModalPortal extends Component {
     }
   }
 
-  handleOutsideDialogClick(e) {
-    if (this.willClose) this.close();
-    this.willClose = true;
-  }
-
-  handleInsideDialogClick(e) {
-    this.willClose = false;
-  }
-
-  handleCloseClick() {
+  onCloseClick = () => {
     this.close();
   }
 
-  handleKeydown(e) {
+  onInsideDialogClick = (e) => {
+    this.willClose = false;
+  }
+
+  onKeyDown = (e) => {
     if (e.keyCode === KEYCODES.ESCAPE && this.props.isOpen) {
       this.close();
     }
   }
 
-  addRootClass() {
-    document.documentElement.classList.add(ROOT_CLASS_OPEN);
-  }
-
-  removeRootClass() {
-    document.documentElement.classList.remove(ROOT_CLASS_OPEN);
-  }
-
-  enforceFoces() {
-    this.modal.focus();
-  }
-
-  getTransitionLeaveTimeout() {
-    return Math.min(this.transitionTimeEnd - this.transitionTimeStart, this.props.transitionLeaveTimeout);
+  onOutsideDialogClick = (e) => {
+    if (this.willClose) this.close();
+    this.willClose = true;
   }
 
   getScrollbarSize() {
@@ -152,6 +131,14 @@ class ModalPortal extends Component {
     document.body.appendChild(scroller);
 
     return scroller.offsetWidth - scroller.clientWidth;
+  }
+
+  getTransitionLeaveTimeout() {
+    return Math.min(this.transitionTimeEnd - this.transitionTimeStart, this.props.transitionLeaveTimeout);
+  }
+
+  addRootClass() {
+    document.documentElement.classList.add(ROOT_CLASS_OPEN);
   }
 
   close() {
@@ -177,6 +164,14 @@ class ModalPortal extends Component {
     }
   }
 
+  enforceFocus() {
+    this.modal.focus();
+  }
+
+  removeRootClass() {
+    document.documentElement.classList.remove(ROOT_CLASS_OPEN);
+  }
+
   render() {
     let mainClassNames = classNames({
       [MAIN_CLASS]: true,
@@ -190,23 +185,23 @@ class ModalPortal extends Component {
     // TODO: Need to add role attribute
     return (
       <div
-        ref={(m) => { this.modal = m; }}
+        ref={m => { this.modal = m; }}
         className={mainClassNames}
         tabIndex={-1}
-        onKeyDown={this.handleKeydown}
-        onClick={this.handleOutsideDialogClick}
+        onKeyDown={this.onKeyDown}
+        onClick={this.onOutsideDialogClick}
       >
         <div className={MAIN_CLASS + '__layout'}>
           <div
             className={MAIN_CLASS + '__dialog'}
-            onClick={this.handleInsideDialogClick}
+            onClick={this.onInsideDialogClick}
           >
             <button
               className={MAIN_CLASS + '__close'}
-              onClick={this.handleCloseClick}
+              onClick={this.onCloseClick}
             >
               <span className={MAIN_CLASS + '__close-icon'} />
-              <span className={MAIN_CLASS + '__close-text'}>Закрыть</span>
+              <span className={MAIN_CLASS + '__close-text'}>Close</span>
             </button>
             <div className={MAIN_CLASS + '__content'}>
               {this.props.children}

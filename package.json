@@ -1,7 +1,20 @@
 {
-  "name": "react-js-modal",
-  "version": "0.1.0",
-  "description": "ReactJS Modal",
+  "author": "Alex Volosojui (https://github.com/Volosojui)",
+  "name": "react-flex-modal",
+  "version": "0.1.1",
+  "description": "A simple react flex modal",
+  "keywords": [
+    "reactjs",
+    "react",
+    "modal",
+    "dialog",
+    "react-component"
+  ],
+  "main": "dist/react-flex-modal.min.js",
+  "files": [
+    "*.md",
+    "dist"
+  ],
   "scripts": {
     "start": "node_modules/.bin/webpack-dev-server",
     "build": "NODE_ENV=production webpack --config webpack.config.dist.js",
@@ -9,20 +22,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/Volosojui/react-js-modal.git"
+    "url": "git+ssh://git@github.com/Volosojui/react-flex-modal.git"
   },
-  "keywords": [
-    "reactjs",
-    "react",
-    "modal",
-    "dialog"
-  ],
-  "author": "Alex Volosojui (https://github.com/Volosojui)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Volosojui/react-js-modal/issues"
+    "url": "https://github.com/Volosojui/react-flex-modal/issues"
   },
-  "homepage": "https://github.com/Volosojui/react-js-modal",
+  "homepage": "https://github.com/Volosojui/react-flex-modal",
   "devDependencies": {
     "babel-cli": "6.24.1",
     "babel-core": "6.24.1",
@@ -31,12 +37,13 @@
     "babel-preset-es2016": "6.24.1",
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
-    "react": "15.3.0",
-    "react-dom": "15.3.0",
     "webpack": "2.4.1",
     "webpack-dev-server": "2.4.5"
   },
   "dependencies": {
-    "classnames": "2.2.5"
+    "classnames": "2.2.5",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   }
 }
