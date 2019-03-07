@@ -1,17 +1,17 @@
-var webpack = require('webpack');
-
-var SRC = './src',
-  EXAMPLES = './examples';
+const PATHS = {
+  SRC: './src',
+  EXAMPLES: './examples'
+}
 
 module.exports = {
   context: __dirname,
 
   entry: {
-    'bundle': EXAMPLES + '/app'
+    'bundle': PATHS.EXAMPLES + '/app'
   },
 
   output: {
-    path: __dirname + '/' + EXAMPLES,
+    path: __dirname + '/' + PATHS.EXAMPLES,
     filename: '[name].js'
   },
 
@@ -20,16 +20,25 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['react', 'es2015', 'es2016', 'stage-2'] },
-        }],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-react'
+              ]
+            },
+          }
+        ],
       }
     ]
   },
 
+  devtool: 'none',
+
   devServer: {
-    contentBase: __dirname + '/' + EXAMPLES,
+    contentBase: __dirname + '/' + PATHS.EXAMPLES,
     port: 9000,
     inline: true
   }
