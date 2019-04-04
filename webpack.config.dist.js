@@ -78,7 +78,8 @@ module.exports = {
     filename: '[name].js',
     path: __dirname + '/' + PATHS.DIST,
     libraryTarget: 'umd',
-    library: 'ReactFlexModal'
+    library: 'ReactFlexModal',
+    globalObject: 'this'
   },
 
   mode: NODE_ENV,

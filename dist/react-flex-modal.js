@@ -7,7 +7,7 @@
 		exports["ReactFlexModal"] = factory(require("prop-types"), require("react"), require("react-dom"));
 	else
 		root["ReactFlexModal"] = factory(root["PropTypes"], root["React"], root["ReactDOM"]);
-})(window, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__2__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE__0__, __WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -401,9 +401,20 @@ function (_Component) {
     key: "render",
     value: function render() {
       var _classNames,
-          _this4 = this;
+          _this4 = this,
+          _classNames2;
 
-      var mainClassNames = classnames_default()((_classNames = {}, _defineProperty(_classNames, MAIN_CLASS, true), _defineProperty(_classNames, MAIN_CLASS_OPEN, this.props.isOpen), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_ENTER, this.state.enter), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_ENTER_ACTIVE, this.state.enterActive), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_LEAVE, this.state.leave), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_LEAVE_ACTIVE, this.state.leaveActive), _classNames)); // TODO: Need to add role attribute
+      var _this$props = this.props,
+          children = _this$props.children,
+          isOpen = _this$props.isOpen,
+          modalClass = _this$props.modalClass,
+          modalDialogClass = _this$props.modalDialogClass;
+      var _this$state = this.state,
+          enter = _this$state.enter,
+          enterActive = _this$state.enterActive,
+          leave = _this$state.leave,
+          leaveActive = _this$state.leaveActive;
+      var mainClassNames = classnames_default()((_classNames = {}, _defineProperty(_classNames, MAIN_CLASS, true), _defineProperty(_classNames, modalClass, modalClass), _defineProperty(_classNames, MAIN_CLASS_OPEN, isOpen), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_ENTER, enter), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_ENTER_ACTIVE, enterActive), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_LEAVE, leave), _defineProperty(_classNames, MAIN_CLASS_TRANSITION_LEAVE_ACTIVE, leaveActive), _classNames)); // TODO: Need to add role attribute
 
       return external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("div", {
         ref: function ref(m) {
@@ -414,20 +425,20 @@ function (_Component) {
         onKeyDown: this.onKeyDown,
         onClick: this.onOutsideDialogClick
       }, external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("div", {
-        className: MAIN_CLASS + '__layout'
+        className: "".concat(MAIN_CLASS, "__layout")
       }, external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("div", {
-        className: MAIN_CLASS + '__dialog',
+        className: classnames_default()((_classNames2 = {}, _defineProperty(_classNames2, "".concat(MAIN_CLASS, "__dialog"), true), _defineProperty(_classNames2, modalDialogClass, modalDialogClass), _classNames2)),
         onClick: this.onInsideDialogClick
       }, external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("button", {
-        className: MAIN_CLASS + '__close',
+        className: "".concat(MAIN_CLASS, "__close"),
         onClick: this.onCloseClick
       }, external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("span", {
-        className: MAIN_CLASS + '__close-icon'
+        className: "".concat(MAIN_CLASS, "__close-icon")
       }), external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("span", {
-        className: MAIN_CLASS + '__close-text'
+        className: "".concat(MAIN_CLASS, "__close-text")
       }, "Close")), external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement("div", {
-        className: MAIN_CLASS + '__content'
-      }, this.props.children))));
+        className: "".concat(MAIN_CLASS, "__content")
+      }, children))));
     }
   }]);
 
@@ -435,13 +446,15 @@ function (_Component) {
 }(external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_["Component"]);
 
 _defineProperty(ModalPortal_ModalPortal, "propTypes", {
-  isOpen: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.bool.isRequired,
-  onClose: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.func,
+  children: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.node,
+  isOpen: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.bool,
   position: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
+  modalClass: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
+  modalDialogClass: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
   transition: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.bool,
   transitionEnterTimeout: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.number,
   transitionLeaveTimeout: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.number,
-  children: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.node
+  onClose: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.func
 });
 
 _defineProperty(ModalPortal_ModalPortal, "defaultProps", {
@@ -506,17 +519,18 @@ function (_Component) {
   Modal_createClass(Modal, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var props = this.props;
       this.parentContainer = getParentContainer();
 
-      if (props.isOpen) {
-        this.mountPortal(props);
+      if (this.props.isOpen) {
+        this.mountPortal(this.props);
       }
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      if (this.props.isOpen) {
+    value: function componentDidUpdate() {
+      var isOpen = this.props.isOpen;
+
+      if (isOpen) {
         this.mountPortal(this.props);
       } else {
         this.unmountPortal();
@@ -557,11 +571,13 @@ function (_Component) {
 Modal_defineProperty(Modal_Modal, "propTypes", {
   children: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.node,
   isOpen: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.bool,
-  onClose: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.func,
   position: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
+  modalClass: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
+  modalDialogClass: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.string,
   transition: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.bool,
   transitionEnterTimeout: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.number,
-  transitionLeaveTimeout: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.number
+  transitionLeaveTimeout: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.number,
+  onClose: external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default.a.func
 });
 
 Modal_defineProperty(Modal_Modal, "defaultProps", {
