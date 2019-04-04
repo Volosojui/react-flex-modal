@@ -1,7 +1,7 @@
 {
   "author": "Alex Volosojui (https://github.com/Volosojui)",
   "name": "react-flex-modal",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A simple react flex modal",
   "keywords": [
     "reactjs",
