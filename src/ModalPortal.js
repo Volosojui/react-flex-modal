@@ -16,13 +16,15 @@ const MAIN_CLASS_TRANSITION_LEAVE_ACTIVE = MAIN_CLASS + '--leave-active';
 
 class ModalPortal extends Component {
   static propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func,
+    children: PropTypes.node,
+    isOpen: PropTypes.bool,
     position: PropTypes.string,
+    modalClass: PropTypes.string,
+    modalDialogClass: PropTypes.string,
     transition: PropTypes.bool,
     transitionEnterTimeout: PropTypes.number,
     transitionLeaveTimeout: PropTypes.number,
-    children: PropTypes.node
+    onClose: PropTypes.func
   };
 
   static defaultProps = {
@@ -173,13 +175,27 @@ class ModalPortal extends Component {
   }
 
   render() {
+    const {
+      children,
+      isOpen,
+      modalClass,
+      modalDialogClass
+    } = this.props
+    const {
+      enter,
+      enterActive,
+      leave,
+      leaveActive
+    } = this.state;
+
     let mainClassNames = classNames({
       [MAIN_CLASS]: true,
-      [MAIN_CLASS_OPEN]: this.props.isOpen,
-      [MAIN_CLASS_TRANSITION_ENTER]: this.state.enter,
-      [MAIN_CLASS_TRANSITION_ENTER_ACTIVE]: this.state.enterActive,
-      [MAIN_CLASS_TRANSITION_LEAVE]: this.state.leave,
-      [MAIN_CLASS_TRANSITION_LEAVE_ACTIVE]: this.state.leaveActive
+      [modalClass]: modalClass,
+      [MAIN_CLASS_OPEN]: isOpen,
+      [MAIN_CLASS_TRANSITION_ENTER]: enter,
+      [MAIN_CLASS_TRANSITION_ENTER_ACTIVE]: enterActive,
+      [MAIN_CLASS_TRANSITION_LEAVE]: leave,
+      [MAIN_CLASS_TRANSITION_LEAVE_ACTIVE]: leaveActive
     });
 
     // TODO: Need to add role attribute
@@ -191,20 +207,23 @@ class ModalPortal extends Component {
         onKeyDown={this.onKeyDown}
         onClick={this.onOutsideDialogClick}
       >
-        <div className={MAIN_CLASS + '__layout'}>
+        <div className={`${MAIN_CLASS}__layout`}>
           <div
-            className={MAIN_CLASS + '__dialog'}
+            className={classNames({
+              [`${MAIN_CLASS}__dialog`]: true,
+              [modalDialogClass]: modalDialogClass
+            })}
             onClick={this.onInsideDialogClick}
           >
             <button
-              className={MAIN_CLASS + '__close'}
+              className={`${MAIN_CLASS}__close`}
               onClick={this.onCloseClick}
             >
-              <span className={MAIN_CLASS + '__close-icon'} />
-              <span className={MAIN_CLASS + '__close-text'}>Close</span>
+              <span className={`${MAIN_CLASS}__close-icon`} />
+              <span className={`${MAIN_CLASS}__close-text`}>Close</span>
             </button>
-            <div className={MAIN_CLASS + '__content'}>
-              {this.props.children}
+            <div className={`${MAIN_CLASS}__content`}>
+              {children}
             </div>
           </div>
         </div>

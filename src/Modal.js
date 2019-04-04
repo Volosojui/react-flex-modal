@@ -20,29 +20,32 @@ export default class Modal extends Component {
   static propTypes = {
     children: PropTypes.node,
     isOpen: PropTypes.bool,
-    onClose: PropTypes.func,
     position: PropTypes.string,
+    modalClass: PropTypes.string,
+    modalDialogClass: PropTypes.string,
     transition: PropTypes.bool,
     transitionEnterTimeout: PropTypes.number,
-    transitionLeaveTimeout: PropTypes.number
+    transitionLeaveTimeout: PropTypes.number,
+    onClose: PropTypes.func
   };
 
   static defaultProps = {
-    isOpen: false
+    isOpen: false,
+
   }
 
   componentDidMount() {
-    const { props } = this;
-
     this.parentContainer = getParentContainer();
 
-    if (props.isOpen) {
-      this.mountPortal(props);
+    if (this.props.isOpen) {
+      this.mountPortal(this.props);
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.isOpen) {
+  componentDidUpdate() {
+    const { isOpen } = this.props;
+
+    if (isOpen) {
       this.mountPortal(this.props);
     } else {
       this.unmountPortal();

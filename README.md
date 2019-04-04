@@ -53,19 +53,26 @@ Default: `false`
 
 If `true`, then the modal window is visible, otherwise is hidden.
 
-#### onClose
-Type: `func`
-
-Default: `undefined`
-
-The callback function that will be called when the modal window is closed.
-
 #### position
 Type: `string`
 
 Default: `fixed`
 
 It should be equal to `position` property specified in the styles.
+
+#### modalClass
+Type: `string`
+
+Default: ``
+
+Custom a css-class of the modal
+
+#### modalDialogClass
+Type: `string`
+
+Default: ``
+
+Custom a css-class of the dialog
 
 #### transition
 Type: `bool`
@@ -119,6 +126,13 @@ For example:
   transition: transform .2s ease, opacity .3s ease .1s;
 }
 ```
+
+#### onClose
+Type: `func`
+
+Default: `undefined`
+
+The callback function that will be called when the modal window is closed.
 
 ## CSS
 

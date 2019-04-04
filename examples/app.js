@@ -40,8 +40,10 @@ class SampleApp extends Component {
         </button>
         <Modal
           isOpen={this.state.isVisibleModal}
-          onClose={this.closeModal}
+          modalClass="Modal--test"
+          modalDialogClass="Modal__dialog--test"
           transition={true}
+          onClose={this.closeModal}
         >
           {this.renderModalContent()}
         </Modal>
