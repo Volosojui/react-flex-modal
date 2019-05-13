@@ -2,19 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
+import getPortalContainer from './utils/getPortalContainer';
 import ModalPortal from './ModalPortal';
-
-const getParentContainer = () => {
-  let container = document.querySelector('[data-modal-container]');
-
-  if (!container) {
-    container = document.createElement('div');
-    container.setAttribute('data-modal-container', '');
-    document.body.appendChild(container);
-  }
-
-  return container;
-}
 
 export default class Modal extends Component {
   static propTypes = {
@@ -35,7 +24,7 @@ export default class Modal extends Component {
   }
 
   componentDidMount() {
-    this.parentContainer = getParentContainer();
+    this.portalContainer = getPortalContainer();
 
     if (this.props.isOpen) {
       this.mountPortal(this.props);
@@ -59,7 +48,7 @@ export default class Modal extends Component {
   mountPortal(props) {
     if (!this.container) {
       this.container = document.createElement('div');
-      this.parentContainer.appendChild(this.container);
+      this.portalContainer.appendChild(this.container);
     }
 
     ReactDOM.render(<ModalPortal {...props} />, this.container);
