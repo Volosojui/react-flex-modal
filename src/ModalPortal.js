@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import getScrollbarSize from './utils/getScrollbarSize';
+
 const KEYCODES = {
   ESCAPE: 27
 };
@@ -73,7 +75,7 @@ class ModalPortal extends Component {
     this.addRootClass();
 
     if (this.props.position == 'fixed') {
-      document.body.style.paddingRight = this.getScrollbarSize() + 'px';
+      document.body.style.paddingRight = `${getScrollbarSize()}px`;
       this.doc.style.position = 'fixed';
       this.doc.style.width = '100%';
       this.doc.style.top = -this.scrollTop + 'px';
