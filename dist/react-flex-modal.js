@@ -188,10 +188,52 @@ var external_root_ReactDOM_commonjs2_react_dom_commonjs_react_dom_amd_react_dom_
 var external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_ = __webpack_require__(0);
 var external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_root_PropTypes_commonjs2_prop_types_commonjs_prop_types_amd_prop_types_umd_prop_types_);
 
+// CONCATENATED MODULE: ./src/utils/getPortalContainer.js
+var ATTR_NAME_SELECTOR = 'data-modal-container';
+
+var getPortalContainer = function getPortalContainer() {
+  var container = document.querySelector("[".concat(ATTR_NAME_SELECTOR, "]"));
+
+  if (container === null) {
+    container = document.createElement('div');
+    container.setAttribute(ATTR_NAME_SELECTOR, '');
+    document.body.appendChild(container);
+  }
+
+  ;
+  return container;
+};
+
+/* harmony default export */ var utils_getPortalContainer = (getPortalContainer);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
 var classnames = __webpack_require__(3);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 
+// CONCATENATED MODULE: ./src/utils/isClient.js
+var isClient = function isClient() {
+  return typeof window !== 'undefined' && window.document;
+};
+
+/* harmony default export */ var utils_isClient = (isClient);
+// CONCATENATED MODULE: ./src/utils/getScrollbarSize.js
+
+var STYLES = "\n  width: 100px;\n  height: 100px;\n  position: fixed;\n  top: -9999px;\n  left: -9999px;\n  z-index: -1;\n  overflow: scroll;\n  visibility: hidden;\n".replace(/\s+/g, '');
+
+var getScrollbarSize_getScrollbarSize = function getScrollbarSize() {
+  if (!utils_isClient()) {
+    return 0;
+  }
+
+  var body = document.body;
+  var elementWithScrollbar = document.createElement('div');
+  elementWithScrollbar.setAttribute('style', STYLES);
+  body.appendChild(elementWithScrollbar);
+  var scrollbarWidth = elementWithScrollbar.offsetWidth - elementWithScrollbar.clientWidth;
+  body.removeChild(elementWithScrollbar);
+  return scrollbarWidth;
+};
+
+/* harmony default export */ var utils_getScrollbarSize = (getScrollbarSize_getScrollbarSize);
 // CONCATENATED MODULE: ./src/ModalPortal.js
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -212,6 +254,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -303,7 +346,7 @@ function (_Component) {
       this.addRootClass();
 
       if (this.props.position == 'fixed') {
-        document.body.style.paddingRight = this.getScrollbarSize() + 'px';
+        document.body.style.paddingRight = "".concat(utils_getScrollbarSize(), "px");
         this.doc.style.position = 'fixed';
         this.doc.style.width = '100%';
         this.doc.style.top = -this.scrollTop + 'px';
@@ -493,17 +536,6 @@ function Modal_defineProperty(obj, key, value) { if (key in obj) { Object.define
 
 
 
-var getParentContainer = function getParentContainer() {
-  var container = document.querySelector('[data-modal-container]');
-
-  if (!container) {
-    container = document.createElement('div');
-    container.setAttribute('data-modal-container', '');
-    document.body.appendChild(container);
-  }
-
-  return container;
-};
 
 var Modal_Modal =
 /*#__PURE__*/
@@ -519,7 +551,7 @@ function (_Component) {
   Modal_createClass(Modal, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.parentContainer = getParentContainer();
+      this.portalContainer = utils_getPortalContainer();
 
       if (this.props.isOpen) {
         this.mountPortal(this.props);
@@ -546,7 +578,7 @@ function (_Component) {
     value: function mountPortal(props) {
       if (!this.container) {
         this.container = document.createElement('div');
-        this.parentContainer.appendChild(this.container);
+        this.portalContainer.appendChild(this.container);
       }
 
       external_root_ReactDOM_commonjs2_react_dom_commonjs_react_dom_amd_react_dom_umd_react_dom_default.a.render(external_root_React_commonjs2_react_commonjs_react_amd_react_umd_react_default.a.createElement(src_ModalPortal, props), this.container);
